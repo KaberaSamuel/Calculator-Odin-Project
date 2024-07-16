@@ -2,6 +2,7 @@
 let var1;
 let var2;
 let operator;
+let position;
 let result = 0;
 const numbers = ".0123456789";
 const operators = "÷×-+";
@@ -81,5 +82,12 @@ downBox.addEventListener("click", function (e) {
   }
 });
 
-// When to clear display
+// Clearing and Deleting
 clearbtn.addEventListener("click", clear);
+deletebtn.addEventListener("click", () => {
+  position = displayWorkings.textContent.length - 1;
+  displayWorkings.textContent =
+    displayWorkings.textContent.slice(position) === " "
+      ? displayWorkings.textContent.slice(0, position - 2)
+      : displayWorkings.textContent.slice(0, position);
+});
