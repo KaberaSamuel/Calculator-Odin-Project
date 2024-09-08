@@ -1,63 +1,37 @@
-/* CSS Reset */
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
 }
 
-/* CSS Variables */
-:root {
-  --bgColor: rgba(0, 0, 0);
-  --bgColorHover: rgba(0, 0, 0, 0.5);
-}
-
-/* Global Styles */
 body {
   background-image: linear-gradient(rgb(79, 10, 75), rgba(71, 8, 6, 0.982));
-  height: 100vh;
-  color: rgba(255, 255, 255, 0.8);
+  min-height: 100vh;
+  color: white;
+  padding: 5vh 35vw;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .container {
-  width: 350px;
-  height: 90vh;
+  background-color: rgba(10, 10, 10);
   border-radius: 20px;
-  margin: 4vh auto;
-  background-color: rgba(20, 19, 19);
   padding: 20px;
-  display: flex;
-  flex-direction: column;
+  width: min-content;
+  box-shadow: 2px 2px 5px black;
 }
 
-.inline {
-  background-color: var(--bgColor);
-  font-size: 1.3rem;
-  flex: 1 1 60px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.inline:hover,
-.major:hover {
-  background-color: var(--bgColorHover);
-}
-
-/* Dealing with input */
 .topBox {
   height: 100px;
-  background-color: var(--bgColor);
+  background-color: black;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   padding: 20px;
-}
-
-.topBox div {
-  display: flex;
-  justify-content: end;
+  text-align: end;
 }
 
 #displayWorkings {
@@ -69,29 +43,33 @@ body {
   padding-top: 15px;
 }
 
-/* Dealing with major buttons */
 .majorButtons {
-  display: flex;
   margin: 15px 0;
-  justify-content: space-between;
+  display: flex;
+  gap: 15px;
 }
 
 .major {
-  background-color: var(--bgColor);
-  padding: 20px 46px;
+  background-color: black;
+  padding: 25px 0;
   border-radius: 10px;
-}
-
-/* Dealing with lower Box */
-.downBox {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
   flex: 1 1 auto;
 }
 
-.row {
-  display: flex;
-  gap: 10px;
-  flex: 1 1 40px;
+main {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+}
+
+.item {
+  background-color: black;
+  font-size: 1.3rem;
+  border-radius: 10px;
+  padding: 20px 30px;
+}
+
+.item:hover,
+.major:hover {
+  transform: translate(2px, -2px) scale(1.03);
 }
