@@ -6,6 +6,7 @@
 
 body {
   background-image: linear-gradient(rgb(79, 10, 75), rgba(71, 8, 6, 0.982));
+  font-family: sans-serif;
   min-height: 100vh;
   color: white;
   padding: 5vh 35vw;
@@ -20,7 +21,7 @@ body {
   border-radius: 20px;
   padding: 20px;
   width: min-content;
-  box-shadow: 2px 2px 5px black;
+  box-shadow: 3px 2px 10px black;
 }
 
 .topBox {
@@ -34,19 +35,19 @@ body {
   text-align: end;
 }
 
-#displayWorkings {
+#workings {
   font-size: large;
 }
 
-#displayResult {
+#result {
   font-size: 25px;
   padding-top: 15px;
 }
 
 .majorButtons {
-  margin: 15px 0;
+  margin: 15px 0 10px;
   display: flex;
-  gap: 15px;
+  gap: 10px;
 }
 
 .major {
@@ -59,7 +60,7 @@ body {
 main {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 15px;
+  gap: 10px;
 }
 
 .item {
@@ -71,5 +72,5 @@ main {
 
 .item:hover,
 .major:hover {
-  transform: translate(2px, -2px) scale(1.03);
+  transform: translate(3px, -3px);
 }

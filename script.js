@@ -1,93 +1,127 @@
-// variables
-let var1;
-let var2;
-let operator;
-let position;
-let result = 0;
-const numbers = ".0123456789";
-const operators = "÷×-+";
+const deleteButton = document.getElementById("delete");
+const clearButton = document.getElementById("clear");
+const workingsDisplay = document.getElementById("workings");
+const resultDisplay = document.getElementById("result");
+const equalButton = document.getElementById("equal");
+const numbers = document.querySelectorAll(".number");
+const operators = document.querySelectorAll(".operator");
 
-const downBox = document.querySelector(".downBox");
-const displayWorkings = document.querySelector("#displayWorkings");
-const displayResult = document.querySelector("#displayResult");
-const clearbtn = document.querySelector("#clear");
-const deletebtn = document.querySelector("#delete");
+const logic = (function () {
+  const output = {
+    result: 0,
+    workings: "",
+  };
 
-//Functions
-const add = (a, b) => a + b;
-const subtract = (a, b) => a - b;
-const multiply = (a, b) => a * b;
-const divide = (a, b) => a / b;
+  function calculate(first, operator, second) {
+    first = Number(first);
+    second = Number(second);
 
-const parseString = function (string) {
-  const words = string.split(" ");
-  var1 = Number(words[0]);
-  var2 = Number(words[2]);
-  let inlineOperator = words[1];
-
-  if (inlineOperator === "+") {
-    result = add(var1, var2);
-  }
-  if (inlineOperator === "-") {
-    result = subtract(var1, var2);
-  }
-  if (inlineOperator === "×") {
-    result = multiply(var1, var2);
-  }
-  if (inlineOperator === "÷") {
-    if (var2 != 0) {
-      result = var1 / var2;
-    } else {
-      alert("Math Error");
-      clear();
-    }
-  }
-};
-
-const checkOperatorPresence = function (string) {
-  for (let char of [...string]) {
-    if (operators.includes(char)) return true;
-  }
-  return false;
-};
-
-const clear = function () {
-  displayWorkings.textContent = "";
-  displayResult.textContent = result = 0;
-};
-
-// working operations
-downBox.addEventListener("click", function (e) {
-  // 1. if it's a number
-  if (numbers.includes(e.target.textContent)) {
-    displayWorkings.textContent += e.target.textContent;
-  }
-
-  // 2. if it's an operator
-  if (operators.includes(e.target.textContent)) {
-    operator = e.target.textContent;
-    if (!checkOperatorPresence(displayWorkings.textContent)) {
-      displayWorkings.textContent += ` ${operator} `;
-    } else {
-      parseString(displayWorkings.textContent);
-      displayWorkings.textContent = `${result} ${operator} `;
-      displayResult.textContent = result;
+    if (operator === "+") {
+      return first + second;
+    } else if (operator === "-") {
+      return first - second;
+    } else if (operator === "×") {
+      return first * second;
+    } else if (operator === "÷") {
+      return first / second;
     }
   }
 
-  // 3. if it's an equal sign
-  if (e.target.textContent === "=") {
-    parseString(displayWorkings.textContent);
-    displayResult.textContent = result;
-  }
-});
+  function currentOperator() {
+    let boolean = false;
+    let operator = "none";
+    for (let char of output.workings) {
+      if ("×÷+-".includes(char)) {
+        boolean = true;
+        operator = char;
+      }
+    }
 
-// Clearing and Deleting
-clearbtn.addEventListener("click", clear);
-deletebtn.addEventListener("click", () => {
-  position = displayWorkings.textContent.length - 1;
-  displayWorkings.textContent =
-    displayWorkings.textContent.slice(position) === " "
-      ? displayWorkings.textContent.slice(0, position - 2)
-      : displayWorkings.textContent.slice(0, position);
-});
+    return { boolean, operator };
+  }
+
+  function evaluateWorkings() {
+    let operands;
+    if (currentOperator().boolean) {
+      operands = output.workings
+        .replaceAll(" ", "")
+        .split(currentOperator().operator);
+
+      const [first, second] = operands;
+      output.result = calculate(first, currentOperator().operator, second);
+    } else {
+      output.result = Number(output.workings);
+    }
+
+    return output.result;
+  }
+
+  function insertResult() {
+    output.workings = String(evaluateWorkings());
+
+    return output.result;
+  }
+
+  return {
+    output,
+    evaluateWorkings,
+    currentOperator,
+    insertResult,
+  };
+})();
+
+const ui = (function () {
+  numbers.forEach((number) => {
+    number.addEventListener("click", () => {
+      logic.output.workings += number.textContent;
+      updateWorkings();
+    });
+  });
+
+  operators.forEach((operator) => {
+    operator.addEventListener("click", () => {
+      if (logic.currentOperator().boolean) {
+        logic.insertResult();
+        updateWorkings();
+        updateResult();
+      }
+      logic.output.workings += ` ${operator.textContent} `;
+      updateWorkings();
+    });
+  });
+
+  function updateWorkings() {
+    workingsDisplay.textContent = logic.output.workings;
+  }
+
+  function updateResult() {
+    logic.evaluateWorkings();
+    resultDisplay.textContent = logic.output.result;
+  }
+
+  function deleteLast() {
+    logic.output.workings = "123456789".includes(
+      logic.output.workings[logic.output.workings.length - 1]
+    )
+      ? logic.output.workings.slice(0, -1)
+      : logic.output.workings.slice(0, -3);
+    updateWorkings();
+  }
+
+  function clear() {
+    logic.output.result = 0;
+    logic.output.workings = "";
+    updateWorkings();
+    updateResult();
+  }
+
+  return {
+    clear,
+    deleteLast,
+    updateResult,
+  };
+})();
+
+clearButton.addEventListener("click", ui.clear);
+deleteButton.addEventListener("click", ui.deleteLast);
+equalButton.addEventListener("click", ui.updateResult);
