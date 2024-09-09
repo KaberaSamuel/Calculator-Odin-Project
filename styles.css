@@ -9,7 +9,6 @@ body {
   font-family: sans-serif;
   min-height: 100vh;
   color: white;
-  padding: 5vh 35vw;
   text-align: center;
   display: flex;
   justify-content: center;
@@ -73,4 +72,57 @@ main {
 .item:hover,
 .major:hover {
   transform: translate(3px, -3px);
+}
+
+@media (max-width: 500px) {
+  body {
+    font-size: 1rem;
+  }
+
+  .container {
+    margin: 10vh auto;
+    width: 80vw;
+    display: grid;
+    padding: 15px;
+  }
+
+  .topBox {
+    height: 12vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .majorButtons {
+    gap: 7px;
+    margin: 9px 0 8px;
+  }
+
+  #workings,
+  #result {
+    font-size: 1.1rem;
+    font-weight: bolder;
+  }
+
+  .major {
+    font-size: inherit;
+    height: 8vh;
+  }
+
+  main {
+    height: 30vh;
+    gap: 7px;
+  }
+
+  .item {
+    font-size: inherit;
+    padding: 0;
+  }
+
+  .item,
+  .major {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
