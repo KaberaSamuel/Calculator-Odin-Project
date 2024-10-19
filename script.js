@@ -6,6 +6,7 @@ const equalButton = document.getElementById("equal");
 const numbers = document.querySelectorAll(".number");
 const operators = document.querySelectorAll(".operator");
 
+// this module will handle all the logic of the game
 const logic = (function () {
   const output = {
     result: 0,
@@ -40,15 +41,26 @@ const logic = (function () {
     return { boolean, operator };
   }
 
+  // function to parse the input string to find value and update app variables
   function evaluateWorkings() {
     let operands;
+
     if (currentOperator().boolean) {
       operands = output.workings
         .replaceAll(" ", "")
         .split(currentOperator().operator);
 
       const [first, second] = operands;
-      output.result = calculate(first, currentOperator().operator, second);
+
+      // catching divide by zero error
+      if (second == 0 && currentOperator().operator === "÷") {
+        alert("Math error");
+        output.result = 0;
+        output.workings = "";
+        ui.clear();
+      } else {
+        output.result = calculate(first, currentOperator().operator, second);
+      }
     } else {
       output.result = Number(output.workings);
     }
@@ -70,6 +82,7 @@ const logic = (function () {
   };
 })();
 
+// this module will handle all the stuff related to the User interface it will communicate with logic module to update each other
 const ui = (function () {
   numbers.forEach((number) => {
     number.addEventListener("click", () => {
