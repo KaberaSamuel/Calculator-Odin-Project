@@ -1,2 +1,5 @@
 # Calculator-Odin-Project
-This is a project about building a calculator, after I have just completed Odin Foundations Course
+This is a project about building a calculator in javascript
+
+live at: https://kaberasamuel.github.io/Calculator-Odin-Project/
+
